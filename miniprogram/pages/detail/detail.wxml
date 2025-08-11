@@ -1,0 +1,50 @@
+<navigation-bar title="诗词详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="container">
+  <view class="poetry-card">
+    <view class="poetry-header">
+      <view class="poetry-title">{{poetry.title}}</view>
+      <view class="poetry-tune" wx:if="{{poetry.tune}}">《{{poetry.tune}}》</view>
+    </view>
+    
+    <view class="poetry-author">{{poetry.dynasty || ''}} · {{poetry.author}}</view>
+    
+    <view class="poetry-content">
+      <text wx:for="{{poetry.contentLines}}" wx:key="*this">{{item}}</text>
+    </view>
+    
+    <view class="poetry-tags">
+      <text class="tag" wx:for="{{poetry.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="analysis-section">
+    <view class="section-title">诗词赏析</view>
+    <view class="analysis-content">{{poetry.analysis}}</view>
+  </view>
+
+  <view class="translation-section" wx:if="{{poetry.translation}}">
+    <view class="section-title">白话译文</view>
+    <view class="translation-content">{{poetry.translation}}</view>
+  </view>
+
+  <view class="author-section" wx:if="{{poetry.authorInfo}}">
+    <view class="section-title">作者简介</view>
+    <view class="author-content">{{poetry.authorInfo}}</view>
+  </view>
+
+  <view class="action-buttons">
+    <view class="action-btn collect-btn {{isCollected ? 'collected' : ''}}" bindtap="toggleCollect">
+      <text class="btn-icon">{{isCollected ? '★' : '☆'}}</text>
+      <text class="btn-text">{{isCollected ? '已收藏' : '收藏'}}</text>
+    </view>
+    <view class="action-btn share-btn" bindtap="sharePoetry">
+      <text class="btn-icon">📤</text>
+      <text class="btn-text">分享</text>
+    </view>
+    <view class="action-btn recite-btn" bindtap="startRecite">
+      <text class="btn-icon">🎤</text>
+      <text class="btn-text">朗读</text>
+    </view>
+  </view>
+</view>

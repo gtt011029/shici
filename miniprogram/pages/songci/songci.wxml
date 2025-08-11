@@ -1,0 +1,49 @@
+<navigation-bar title="宋词元曲" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="container">
+  <!-- 类型选择 -->
+  <view class="type-selector">
+    <view class="type-item {{selectedType === 'songci' ? 'active' : ''}}" bindtap="selectType" data-type="songci">
+      宋词
+    </view>
+    <view class="type-item {{selectedType === 'yuanqu' ? 'active' : ''}}" bindtap="selectType" data-type="yuanqu">
+      元曲
+    </view>
+  </view>
+
+  <!-- 年级选择 -->
+  <view class="grade-selector">
+    <view class="grade-item {{selectedGrade === 'primary' ? 'active' : ''}}" bindtap="selectGrade" data-grade="primary">
+      小学
+    </view>
+    <view class="grade-item {{selectedGrade === 'middle' ? 'active' : ''}}" bindtap="selectGrade" data-grade="middle">
+      中学
+    </view>
+    <view class="grade-item {{selectedGrade === 'high' ? 'active' : ''}}" bindtap="selectGrade" data-grade="high">
+      高中
+    </view>
+  </view>
+
+  <!-- 宋词元曲列表 -->
+  <view class="poetry-list">
+    <view class="poetry-item" wx:for="{{poetryList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="poetry-header">
+        <view class="poetry-title">{{item.title}}</view>
+        <view class="poetry-tune">《{{item.tune}}》</view>
+      </view>
+      <view class="poetry-author">{{item.author}}</view>
+      <view class="poetry-content">{{item.content}}</view>
+      <view class="poetry-footer">
+        <view class="poetry-tags">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">{{tag}}</text>
+        </view>
+        <view class="poetry-type">{{item.type === 'songci' ? '宋词' : '元曲'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text bindtap="loadMore">加载更多</text>
+  </view>
+</view>

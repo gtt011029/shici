@@ -1,0 +1,142 @@
+.container {
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.poetry-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.poetry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.poetry-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.poetry-tune {
+  font-size: 28rpx;
+  color: #666;
+  font-style: italic;
+}
+
+.poetry-author {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+}
+
+.poetry-content {
+  margin-bottom: 30rpx;
+}
+
+.poetry-content text {
+  display: block;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 10rpx;
+}
+
+.poetry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12rpx 20rpx;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+}
+
+.analysis-section,
+.translation-section,
+.author-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  border-left: 8rpx solid #667eea;
+  padding-left: 20rpx;
+}
+
+.analysis-content,
+.translation-content,
+.author-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.collect-btn {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+}
+
+.collect-btn.collected {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+}
+
+.share-btn {
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+  color: white;
+}
+
+.recite-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-icon {
+  font-size: 40rpx;
+  margin-bottom: 10rpx;
+}
+
+.btn-text {
+  font-size: 24rpx;
+}

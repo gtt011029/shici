@@ -1,0 +1,55 @@
+<!--index.wxml-->
+<navigation-bar title="古诗词学习" back="{{false}}" color="white" background="transparent"></navigation-bar>
+
+<view class="container">
+  <view class="hero-section">
+    <view class="hero-title">古诗词学习</view>
+    <view class="hero-subtitle">传承中华文化，品味诗词之美</view>
+  </view>
+
+  <view class="category-grid">
+    <view class="category-item classic" bindtap="goToClassic">
+      <view class="category-icon">📚</view>
+      <view class="category-title">经典古诗词</view>
+      <view class="category-desc">精选历代经典诗词</view>
+    </view>
+    
+    <view class="category-item tangshi" bindtap="goToTangshi">
+      <view class="category-icon">🌸</view>
+      <view class="category-title">唐诗精选</view>
+      <view class="category-desc">盛唐诗歌的璀璨明珠</view>
+    </view>
+    
+    <view class="category-item songci" bindtap="goToSongci">
+      <view class="category-icon">🎵</view>
+      <view class="category-title">宋词元曲</view>
+      <view class="category-desc">婉约豪放的词曲艺术</view>
+    </view>
+  </view>
+
+  <view class="features-section">
+    <view class="section-title">学习特色</view>
+    <view class="features-list">
+      <view class="feature-item">
+        <view class="feature-icon">🎯</view>
+        <view class="feature-text">分级学习</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">📖</view>
+        <view class="feature-text">详细赏析</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">💾</view>
+        <view class="feature-text">收藏功能</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">🔍</view>
+        <view class="feature-text">智能搜索</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="start-btn" bindtap="startLearning">
+    开始学习
+  </view>
+</view>
