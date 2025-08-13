@@ -1,3 +1,5 @@
+import apiService from '../../utils/api';
+
 interface TangPoetryItem {
   id: string;
   title: string;
@@ -6,6 +8,8 @@ interface TangPoetryItem {
   tags: string[];
   grade: string;
   length: number;
+  dynasty?: string;
+  type?: string;
 }
 
 Page({
@@ -14,7 +18,8 @@ Page({
     searchKeyword: '',
     poetryList: [] as TangPoetryItem[],
     hasMore: true,
-    page: 1
+    page: 1,
+    loading: false
   },
 
   onLoad() {
@@ -47,88 +52,72 @@ Page({
     this.loadPoetryList();
   },
 
-  loadPoetryList() {
-    // 模拟唐诗数据
-    const mockData: TangPoetryItem[] = [
-      {
-        id: '1',
-        title: '静夜思',
-        author: '李白',
-        content: '床前明月光，疑是地上霜。举头望明月，低头思故乡。',
-        tags: ['思乡', '月亮', '夜晚'],
-        grade: 'primary',
-        length: 20
-      },
-      {
-        id: '2',
-        title: '春晓',
-        author: '孟浩然',
-        content: '春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。',
-        tags: ['春天', '自然', '鸟鸣'],
-        grade: 'primary',
-        length: 20
-      },
-      {
-        id: '3',
-        title: '登鹳雀楼',
-        author: '王之涣',
-        content: '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。',
-        tags: ['登高', '壮志', '黄河'],
-        grade: 'middle',
-        length: 20
-      },
-      {
-        id: '4',
-        title: '望庐山瀑布',
-        author: '李白',
-        content: '日照香炉生紫烟，遥看瀑布挂前川。飞流直下三千尺，疑是银河落九天。',
-        tags: ['瀑布', '壮观', '庐山'],
-        grade: 'middle',
-        length: 28
-      },
-      {
-        id: '5',
-        title: '将进酒',
-        author: '李白',
-        content: '君不见黄河之水天上来，奔流到海不复回。君不见高堂明镜悲白发，朝如青丝暮成雪。人生得意须尽欢，莫使金樽空对月。天生我材必有用，千金散尽还复来。',
-        tags: ['豪放', '人生', '饮酒'],
-        grade: 'high',
-        length: 56
-      },
-      {
-        id: '6',
-        title: '长恨歌',
-        author: '白居易',
-        content: '汉皇重色思倾国，御宇多年求不得。杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。',
-        tags: ['爱情', '宫廷', '悲剧'],
-        grade: 'high',
-        length: 40
+  async loadPoetryList() {
+    if (this.data.loading) return;
+    
+    this.setData({ loading: true });
+    
+    try {
+      const params: any = {
+        page: this.data.page,
+        limit: 20,
+        grade: this.data.selectedGrade,
+        type: 'tangshi'
+      };
+      
+      // 如果有搜索关键词，使用搜索接口
+      if (this.data.searchKeyword) {
+        const response = await apiService.searchPoetry(this.data.searchKeyword, this.data.page, 20);
+        if (response.success) {
+          const newList = response.data.list.filter((item: any) => 
+            item.grade === this.data.selectedGrade && item.type === 'tangshi'
+          );
+          
+          this.setData({
+            poetryList: this.data.page === 1 ? newList : [...this.data.poetryList, ...newList],
+            hasMore: response.data.pagination.page < response.data.pagination.pages,
+            loading: false
+          });
+        } else {
+          wx.showToast({
+            title: response.message || '搜索失败',
+            icon: 'none'
+          });
+        }
+      } else {
+        // 使用列表接口
+        const response = await apiService.getPoetryList(params);
+        if (response.success) {
+          this.setData({
+            poetryList: this.data.page === 1 ? response.data.list : [...this.data.poetryList, ...response.data.list],
+            hasMore: response.data.pagination.page < response.data.pagination.pages,
+            loading: false
+          });
+        } else {
+          wx.showToast({
+            title: response.message || '获取数据失败',
+            icon: 'none'
+          });
+        }
       }
-    ];
-
-    // 根据年级和搜索关键词筛选数据
-    let filteredData = mockData.filter(item => item.grade === this.data.selectedGrade);
-    
-    if (this.data.searchKeyword) {
-      filteredData = filteredData.filter(item => 
-        item.title.includes(this.data.searchKeyword) ||
-        item.author.includes(this.data.searchKeyword) ||
-        item.content.includes(this.data.searchKeyword) ||
-        item.tags.some(tag => tag.includes(this.data.searchKeyword))
-      );
+    } catch (error) {
+      console.error('加载唐诗列表失败:', error);
+      wx.showToast({
+        title: '网络请求失败',
+        icon: 'none'
+      });
+      this.setData({ loading: false });
     }
-    
-    this.setData({
-      poetryList: filteredData,
-      hasMore: false
-    });
   },
 
-  loadMore() {
-    wx.showToast({
-      title: '暂无更多数据',
-      icon: 'none'
+  async loadMore() {
+    if (!this.data.hasMore || this.data.loading) return;
+    
+    this.setData({
+      page: this.data.page + 1
     });
+    
+    await this.loadPoetryList();
   },
 
   goToDetail(e: any) {

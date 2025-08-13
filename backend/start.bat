@@ -22,8 +22,12 @@ if %errorlevel% neq 0 (
 echo.
 echo 3. 检查MongoDB连接...
 echo 请确保MongoDB服务已启动
-echo 如果没有安装MongoDB，可以使用Docker运行:
-echo docker run -d -p 27017:27017 --name mongodb mongo:latest
+echo.
+echo 如果没有安装MongoDB，可以选择以下方式之一:
+echo 方式A: 手动安装MongoDB (https://www.mongodb.com/try/download/community)
+echo 方式B: 使用Docker运行MongoDB (需要先安装Docker Desktop):
+echo    docker run -d -p 27017:27017 --name mongodb mongo:latest
+echo.
 
 echo.
 echo 4. 初始化数据...

@@ -20,8 +20,13 @@
     <view class="search-btn" bindtap="search">搜索</view>
   </view>
 
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading && poetryList.length === 0}}">
+    <view class="loading-text">正在加载...</view>
+  </view>
+
   <!-- 唐诗列表 -->
-  <view class="poetry-list">
+  <view class="poetry-list" wx:if="{{!loading || poetryList.length > 0}}">
     <view class="poetry-item" wx:for="{{poetryList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="poetry-header">
         <view class="poetry-title">{{item.title}}</view>
@@ -37,8 +42,18 @@
     </view>
   </view>
 
+  <!-- 空状态 -->
+  <view class="empty-container" wx:if="{{!loading && poetryList.length === 0}}">
+    <view class="empty-text">暂无数据</view>
+  </view>
+
   <!-- 加载更多 -->
-  <view class="load-more" wx:if="{{hasMore}}">
+  <view class="load-more" wx:if="{{hasMore && !loading}}">
     <text bindtap="loadMore">加载更多</text>
+  </view>
+  
+  <!-- 加载更多状态 -->
+  <view class="loading-more" wx:if="{{loading && poetryList.length > 0}}">
+    <text>正在加载更多...</text>
   </view>
 </view>
